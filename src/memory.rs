@@ -4,7 +4,11 @@ pub struct Memory {
 
 impl Memory {
 
-  fn read_from_memory(&self, address: u8) -> u8 {
+  pub fn new(&mut self) {
+    self.ram = [0x00; 4095]; // Create empty ram instance
+  }
+
+  fn read_from_memory(self, address: u8) -> u8 {
     // TODO: Take from index
     return self.ram[address as usize];
   }
