@@ -1,9 +1,11 @@
+use crate::chip8::Chip8;
+
+mod chip8;
+mod register;
 mod memory;
-mod keyboard;
-mod registry;
-mod cpu;
-mod display;
 
 fn main() {
+    let Chip8 = Chip8::new();
+
     println!("Hello, world!");
 }

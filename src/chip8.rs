@@ -1,16 +1,17 @@
-use crate::{memory::Memory, registry::Registry, keyboard::Keyboard, display:: Display};
+use crate::{register::{self, Register}, memory::Memory};
 
-pub struct Cpu {
-  memory: Memory,
-  registry: Registry,
-  keyboard: Keyboard,
-  display: Display,
-  can_wait_for_key_input: bool
+pub struct Chip8 {
+  Memory: Memory,
+  Register: Register,
 }
 
-impl Cpu {
+impl Chip8 {
 
-  fn new(&mut self) {
+  pub fn new() -> Chip8 {
+    return Chip8 {
+      Memory: Memory::new(),
+      Register: Register::new(0x00, 0x00)
+    };
   }
 
   /// Clear the display.
@@ -26,39 +27,39 @@ impl Cpu {
 
   /// Jump to location nnn.
   /// The interpreter sets the program counter to nnn.
-  fn jp(addr) {
+  fn jp(addr: u8) {
 
   }
 
   /// Call subroutine at nnn.
   /// The interpreter increments the stack pointer, then puts the current PC on the top of the stack. The PC is then set to nnn.
-  fn call(addr) {
+  fn call(addr: u8) {
 
   }
 
   /// Skip next instruction if Vx = kk.
   /// The interpreter compares register Vx to kk, and if they are equal, increments the program counter by 2.
-  fn se(Vx, byte) {
+  fn se(Vx: u8, byte: u8) {
 
   }
 
   /// Skip next instruction if Vx != kk.
   /// The interpreter compares register Vx to kk, and if they are not equal, increments the program counter by 2.
-  fn sne(Vx, byte) {
+  fn sne(Vx: u8, byte: u8) {
     
   }
 
   /// Skip next instruction if Vx = Vy.
   /// The interpreter compares register Vx to register Vy, and if they are equal, increments the program counter by 2.
-  fn se2(Vx, Vy) {
+  fn se2(Vx: u8, Vy: u8) {
 
   }
 
   fn execute(opcode: u16) {
     match opcode {
-      0x00E0 => Cpu::cls(),
-      0x00EE => Cpu::ret(),
-      _ => Cpu::execute_extended(opcode)
+      0x00E0 => Chip8::cls(),
+      0x00EE => Chip8::ret(),
+      _ => Chip8::execute_extended(opcode)
     }
   }
 
@@ -72,12 +73,12 @@ impl Cpu {
             
     let opcode = 0x07;
     match opcode {
-      0x0000 => {},
-      0x1000 => Cpu::jp(),
-      0x2000 => Cpu::call(),
-      0x3000 => Cpu::se(),
-      0x4000 => Cpu::sne(),
-      0x5000 => Cpu::se2(),
+      0x0000 => {}, // Skip
+      // 0x1000 => Chip8::jp(),
+      // 0x2000 => Chip8::call(),
+      // 0x3000 => Chip8::se(),
+      // 0x4000 => Chip8::sne(),
+      // 0x5000 => Chip8::se2(),
       _ => {}
     }
   }
