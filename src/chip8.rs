@@ -1,22 +1,22 @@
 use crate::{register::{Register}, memory::Memory};
 
 pub struct Chip8 {
-  MEMORY: Memory,
-  REGISTER: Register,
+  memory: Memory,
+  register: Register,
 }
 
 impl Chip8 {
 
   pub fn new() -> Chip8 {
     return Chip8 {
-      MEMORY: Memory::new(),
-      REGISTER: Register::new(0x00, 0x00)
+      memory: Memory::new(),
+      register: Register::new(0x00, 0x00)
     };
   }
 
   /// Run a Cpu cycle
-  pub fn cycle(self) {
-    self.MEMORY.read_from_memory(0x00);
+  pub fn cycle(&self) {
+    self.memory.read_from_memory(0x00);
 
     println!("Tick");
   }
