@@ -14,6 +14,11 @@ impl Chip8 {
     };
   }
 
+  /// Run a Cpu cycle
+  pub fn cycle(&self) {
+    println!("Tick");
+  }
+
   /// Clear the display.
   fn cls() {
 
