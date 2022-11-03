@@ -8,5 +8,5 @@ mod time;
 fn main() {
     let chip8: Chip8 = Chip8::new();
 
-
+    let t = time::Time::new();
 }

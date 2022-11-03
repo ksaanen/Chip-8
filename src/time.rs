@@ -1,12 +1,12 @@
 use std::time::{SystemTime, Duration};
 
-struct Timer {
+pub struct Time {
     TIME_STAMP: SystemTime
 }
 
-impl Timer {
-    pub fn new() -> Timer {
-        return Timer { TIME_STAMP: SystemTime::now()}
+impl Time {
+    pub fn new() -> Time {
+        return Time { TIME_STAMP: SystemTime::now()}
     }
 
     pub fn time_passed(self) -> Duration {
