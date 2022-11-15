@@ -1,3 +1,5 @@
+use std::default;
+
 use crate::{register::{Register}, memory::Memory};
 
 pub struct Chip8 {
@@ -10,7 +12,7 @@ impl Chip8 {
   pub fn new() -> Chip8 {
     return Chip8 {
       memory: Memory::new(),
-      register: Register::new(0x00, 0x00)
+      register: Register::new()
     };
   }
 
@@ -19,6 +21,17 @@ impl Chip8 {
     self.memory.read_from_memory(0x00);
 
     println!("Tick");
+  }
+
+  fn eval_opcode(&self) {
+    match &self.register.i {
+        0x00 => {
+
+        },
+        default => {
+
+        }
+    }
   }
 
   /// Clear the display.
@@ -89,4 +102,8 @@ impl Chip8 {
       _ => {}
     }
   }
+}
+
+pub enum OpCode {
+  
 }

@@ -13,7 +13,7 @@ fn main() {
     // Basic Cpu cycle timer
     let mut t = time::Time::new();
     while t.running {
-        if (t.time_passed() > Duration::from_secs(1)) {
+        if t.time_passed() > Duration::from_secs(1) {
             chip8.cycle();
             t.reset();
         }
