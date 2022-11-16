@@ -1,30 +1,8 @@
-use std::time::{SystemTime, Duration};
+use std::time::{SystemTime, UNIX_EPOCH};
 
-pub struct Time {
-    time_stamp: SystemTime,
-    pub running: bool
+pub fn time_millis() -> u32 {
+    SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .unwrap()
+        .as_millis() as u32
 }
-
-impl Time {
-    pub fn new() -> Time {
-        return Time {
-            time_stamp: SystemTime::now(),
-            running: true
-        }
-    }
-
-    pub fn time_passed(&self) -> Duration {
-        let now = SystemTime::now();
-        let diff = now.duration_since(self.time_stamp).unwrap();
-        return diff;
-    }
-
-    pub fn reset(&mut self) {
-        self.time_stamp = SystemTime::now();
-    }
-
-    pub fn stop(&mut self) {
-        self.running = false;
-    }
-}
-
