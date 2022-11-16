@@ -1,17 +1,18 @@
-# Cowgod's Chip-8 Technical Reference v1.0
+# Technical Reference
+This is a conversion of [Cowgod's Chip-8 Technical Reference v1.0](http://devernay.free.fr/hacks/chip8/C8TECH10.HTM) to markdown format, all credits about the content of this document go to him (Thomas P. Greene).
 
 ## Table of Contents <span id="toc">
 
-- Using This Document
-- About Chip-8
-- Chip-8 Specifications
-- Memory Diagram - Memory Map
-- Registers
-- Keyboard Diagram - Keyboard Layout
-- Display Diagram - Display Coordinates Listing - The - Chip-8 Hexadecimal Font
-- Timers & Sound
-- Chip-8 Instructions
-- Standard Chip-8 Instructions
+- [Using This Document](#using_this_document)
+- [About Chip-8](#about_chip8)
+- [Chip-8 Specifications](#chip8_specifications)
+- [Memory Diagram - Memory Map](#memory_diagram)
+- [Registers](#registers)
+- [Keyboard Diagram - Keyboard Layout](#keyboard_diagram)
+- [Display Diagram - Display Coordinates Listing - The - Chip-8 Hexadecimal Font](#display_diagram)
+- [Timers & Sound](#timers_and_sound)
+- [Chip-8 Instructions](#chip8_instructions)
+- [Standard Chip-8 Instructions](#standard_chip8_instructions)
   - [00E0](#00E0) - CLS
   - [00EE](#00EE) - RET
   - [0nnn](#0nnn) - SYS addr
@@ -47,33 +48,33 @@
   - [Fx33](#Fx33) - LD B, Vx
   - [Fx55](#Fx55) - LD \[I\], Vx
   - [Fx65](#Fx65) - LD Vx, \[I\]
-- Super Chip-48 Instructions
-  - 00Cn - SCD nibble
-  - 00FB - SCR
-  - 00FC - SCL
-  - 00FD - EXIT
-  - 00FE - LOW
-  - 00FF - HIGH
-  - Dxy0 - DRW Vx, Vy, 0
-  - Fx30 - LD HF, Vx
-  - Fx75 - LD R, Vx
-  - Fx85 - LD Vx, R
-    4.0 - Interpreters
-    5.0 - Credits
+- [Super Chip-48 Instructions](#super_chip48_instructions)
+  - [00Cn](#super_chip48_instructions) - SCD nibble
+  - [00FB](#super_chip48_instructions) - SCR
+  - [00FC](#super_chip48_instructions) - SCL
+  - [00FD](#super_chip48_instructions) - EXIT
+  - [00FE](#super_chip48_instructions) - LOW
+  - [00FF](#super_chip48_instructions) - HIGH
+  - [Dxy0](#super_chip48_instructions) - DRW Vx, Vy, 0
+  - [Fx30](#super_chip48_instructions) - LD HF, Vx
+  - [Fx75](#super_chip48_instructions) - LD R, Vx
+  - [Fx85](#super_chip48_instructions) - LD Vx, R
+- [Interpreters](#interpreters)
+- [Credits](#credits)
 
-## Using This Document [\[TOC\]](#toc)
+## Using This Document <span id="using_this_document"></span>[\[TOC\]](#toc)
 
 While creating this document, I took every effort to try to make it easy to read, as well as easy to find what you're looking for. In most cases, where a hexadecimal value is given, it is followed by the equivalent decimal value in parenthesis. For example, "0x200 (512)." In most cases, when a word or letter is italicized, it is referring to a variable value, for example, if I write "Vx," the x reffers to a 4-bit value. The most important thing to remember as you read this document is that every [TOC] link will take you back to the Table Of Contents. Also, links that you have not yet visited will appear in blue, while links you have used will be gray.
 
-## About Chip-8 [\[TOC\]](#toc)
+## About Chip-8 <span id="about_chip8"></span>[\[TOC\]](#toc)
 
 Whenever I mention to someone that I'm writing a Chip-8 interpreter, the response is always the same: "What's a Chip-8?" Chip-8 is a simple, interpreted, programming language which was first used on some do-it-yourself computer systems in the late 1970s and early 1980s. The COSMAC VIP, DREAM 6800, and ETI 660 computers are a few examples. These computers typically were designed to use a television as a display, had between 1 and 4K of RAM, and used a 16-key hexadecimal keypad for input. The interpreter took up only 512 bytes of memory, and programs, which were entered into the computer in hexadecimal, were even smaller. In the early 1990s, the Chip-8 language was revived by a man named Andreas Gustafsson. He created a Chip-8 interpreter for the HP48 graphing calculator, called Chip-48. The HP48 was lacking a way to easily make fast games at the time, and Chip-8 was the answer. Chip-48 later begat Super Chip-48, a modification of Chip-48 which allowed higher resolution graphics, as well as other graphical enhancements. Chip-48 inspired a whole new crop of Chip-8 interpreters for various platforms, including MS-DOS, Windows 3.1, Amiga, HP48, MSX, Adam, and ColecoVision. I became involved with Chip-8 after stumbling upon Paul Robson's interpreter on the World Wide Web. Shortly after that, I began writing my own Chip-8 interpreter. This document is a compilation of all the different sources of information I used while programming my interpreter.
 
-## Chip-8 Specifications [\[TOC\]](#toc)
+## Chip-8 Specifications <span id="chip8_specifications"></span>[\[TOC\]](#toc)
 
 This section describes the Chip-8 memory, registers, display, keyboard, and timers.
 
-## Memory [\[TOC\]](#toc)
+## Memory <span id="memory_diagram"></span>[\[TOC\]](#toc)
 
 The Chip-8 language is capable of accessing up to 4KB (4,096 bytes) of RAM, from location 0x000 (0) to 0xFFF (4095). The first 512 bytes, from 0x000 to 0x1FF, are where the original interpreter was located, and should not be used by programs. Most Chip-8 programs start at location 0x200 (512), but some begin at 0x600 (1536). Programs beginning at 0x600 are intended for the ETI 660 computer.
 
@@ -103,11 +104,11 @@ Memory Map:
 +---------------+= 0x000 (0) Start of Chip-8 RAM
 ```
 
-## Registers [\[TOC\]](#toc)
+## Registers <span id="registers"></span>[\[TOC\]](#toc)
 
 Chip-8 has 16 general purpose 8-bit registers, usually referred to as Vx, where x is a hexadecimal digit (0 through F). There is also a 16-bit register called I. This register is generally used to store memory addresses, so only the lowest (rightmost) 12 bits are usually used. The VF register should not be used by any program, as it is used as a flag by some instructions. See section 3.0, Instructions for details. Chip-8 also has two special purpose 8-bit registers, for the delay and sound timers. When these registers are non-zero, they are automatically decremented at a rate of 60Hz. See the section 2.5, Timers & Sound, for more information on these. There are also some "pseudo-registers" which are not accessable from Chip-8 programs. The program counter (PC) should be 16-bit, and is used to store the currently executing address. The stack pointer (SP) can be 8-bit, it is used to point to the topmost level of the stack. The stack is an array of 16 16-bit values, used to store the address that the interpreter shoud return to when finished with a subroutine. Chip-8 allows for up to 16 levels of nested subroutines.
 
-## Keyboard [\[TOC\]](#toc)
+## Keyboard <span id="keyboard_diagram"></span>[\[TOC\]](#toc)
 
 The computers which originally used the Chip-8 Language had a 16-key hexadecimal keypad with the following layout:
 
@@ -121,7 +122,7 @@ The computers which originally used the Chip-8 Language had a 16-key hexadecimal
 This layout must be mapped into various other configurations to fit the
 keyboards of today's platforms.
 
-## Display [\[TOC\]](#toc)
+## Display <span id="display_diagram"></span>[\[TOC\]](#toc)
 
 The original implementation of the Chip-8 language used a 64x32-pixel monochrome display with this format:
 
@@ -275,15 +276,15 @@ in binary and hexadecimal:
 | `#___` | 10000000 | 0x80 |
 | `#___` | 10000000 | 0x80 |
 
-## Timers & Sound [\[TOC\]](#toc)
+## Timers & Sound <span id="timers_and_sound"></span>[\[TOC\]](#toc)
 
 Chip-8 provides 2 timers, a delay timer and a sound timer. The delay timer is active whenever the delay timer register (DT) is non-zero. This timer does nothing more than subtract 1 from the value of DT at a rate of 60Hz. When DT reaches 0, it deactivates. The sound timer is active whenever the sound timer register (ST) is non-zero. This timer also decrements at a rate of 60Hz, however, as long as ST's value is greater than zero, the Chip-8 buzzer will sound. When ST reaches zero, the sound timer deactivates. The sound produced by the Chip-8 interpreter has only one tone. The frequency of this tone is decided by the author of the interpreter.
 
-## Chip-8 Instructions [\[TOC\]](#toc)
+## Chip-8 Instructions <span id="chip8_instructions"></span>[\[TOC\]](#toc)
 
 The original implementation of the Chip-8 language includes 36 different instructions, including math, graphics, and flow control functions. Super Chip-48 added an additional 10 instructions, for a total of 46. All instructions are 2 bytes long and are stored most-significant-byte first. In memory, the first byte of each instruction should be located at an even addresses. If a program includes sprite data, it should be padded so any instructions following it will be properly situated in RAM. This document does not yet contain descriptions of the Super Chip-48 instructions. They are, however, listed below. In these listings, the following variables are used: nnn or addr - A 12-bit value, the lowest 12 bits of the instruction n or nibble - A 4-bit value, the lowest 4 bits of the instruction x - A 4-bit value, the lower 4 bits of the high byte of the instruction y - A 4-bit value, the upper 4 bits of the low byte of the instruction kk or byte - An 8-bit value, the lowest 8 bits of the instruction
 
-## Standard Chip-8 Instructions [\[TOC\]](#toc)
+## Standard Chip-8 Instructions <span id="standard_chip8_instructions"></span>[\[TOC\]](#toc)
 
 ### 0nnn - SYS addr <span id="0nnn"></span>
 
@@ -451,7 +452,7 @@ Store registers V0 through Vx in memory starting at location I. The interpreter 
 
 Read registers V0 through Vx from memory starting at location I. The interpreter reads values from memory starting at location I into registers V0 through Vx.
 
-## Super Chip-48 Instructions [\[TOC\]](#toc)
+## Super Chip-48 Instructions <span id="super_chip48_instructions"></span>[\[TOC\]](#toc)
 
 ```
 00Cn - SCD nibble
@@ -466,7 +467,7 @@ Fx75 - LD R, Vx
 Fx85 - LD Vx, R
 ```
 
-## Interpreters [\[TOC\]](#toc)
+## Interpreters <span id="interpreters"></span>[\[TOC\]](#toc)
 
 Below is a list of every Chip-8 interpreter I could find on the World Wide Web:
 
@@ -480,7 +481,7 @@ Below is a list of every Chip-8 interpreter I could find on the World Wide Web:
 | Super Chip-48   | 1.1     | Based on Chip-48, modified by Erik Bryntse | HP48                         |
 | Vision-8        | 1.0     | Marcel de Kogel                            | DOS, Adam, MSX, ColecoVision |
 
-## Credits [\[TOC\]](#toc)
+## Credits <span id="credits"></span>[\[TOC\]](#toc)
 
 This document was compiled by Thomas P. Greene. Sources include:
 
