@@ -3,7 +3,7 @@ This is a conversion of [Cowgod's Chip-8 Technical Reference v1.0](http://devern
 
 ## Table of Contents <span id="toc">
 
-[TOC]
+[[TOC]]
 
 ## Using This Document <span id="using_this_document"></span>[\[TOC\]](#toc)
 
