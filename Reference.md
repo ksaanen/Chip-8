@@ -3,64 +3,7 @@ This is a conversion of [Cowgod's Chip-8 Technical Reference v1.0](http://devern
 
 ## Table of Contents <span id="toc">
 
-- [Using This Document](#using_this_document)
-- [About Chip-8](#about_chip8)
-- [Chip-8 Specifications](#chip8_specifications)
-- [Memory Diagram - Memory Map](#memory_diagram)
-- [Registers](#registers)
-- [Keyboard Diagram - Keyboard Layout](#keyboard_diagram)
-- [Display Diagram - Display Coordinates Listing - The - Chip-8 Hexadecimal Font](#display_diagram)
-- [Timers & Sound](#timers_and_sound)
-- [Chip-8 Instructions](#chip8_instructions)
-- [Standard Chip-8 Instructions](#standard_chip8_instructions)
-  - [00E0](#00E0) - CLS
-  - [00EE](#00EE) - RET
-  - [0nnn](#0nnn) - SYS addr
-  - [1nnn](#1nnn) - JP addr
-  - [2nnn](#2nnn) - CALL addr
-  - [3xkk](#3xkk) - SE Vx, byte
-  - [4xkk](#4xkk) - SNE Vx, byte
-  - [5xy0](#5xy0) - SE Vx, Vy
-  - [6xkk](#6xkk) - LD Vx, byte
-  - [7xkk](#7xkk) - ADD Vx, byte
-  - [8xy0](#8xy0) - LD Vx, Vy
-  - [8xy1](#8xy1) - OR Vx, Vy
-  - [8xy2](#8xy2) - AND Vx, Vy
-  - [8xy3](#8xy3) - XOR Vx, Vy
-  - [8xy4](#8xy4) - ADD Vx, Vy
-  - [8xy5](#8xy5) - SUB Vx, Vy
-  - [8xy6](#8xy6) - SHR Vx {, Vy}
-  - [8xy7](#8xy7) - SUBN Vx, Vy
-  - [8xyE](#8xyE) - SHL Vx {, Vy}
-  - [9xy0](#9xy0) - SNE Vx, Vy
-  - [Annn](#Annn) - LD I, addr
-  - [Bnnn](#Bnnn) - JP V0, addr
-  - [Cxkk](#Cxkk) - RND Vx, byte
-  - [Dxyn](#Dxyn) - DRW Vx, Vy, nibble
-  - [Ex9E](#Ex9E) - SKP Vx
-  - [ExA1](#ExA1) - SKNP Vx
-  - [Fx07](#Fx07) - LD Vx, DT
-  - [Fx0A](#Fx0A) - LD Vx, K
-  - [Fx15](#Fx15) - LD DT, Vx
-  - [Fx18](#Fx18) - LD ST, Vx
-  - [Fx1E](#Fx1E) - ADD I, Vx
-  - [Fx29](#Fx29) - LD F, Vx
-  - [Fx33](#Fx33) - LD B, Vx
-  - [Fx55](#Fx55) - LD \[I\], Vx
-  - [Fx65](#Fx65) - LD Vx, \[I\]
-- [Super Chip-48 Instructions](#super_chip48_instructions)
-  - [00Cn](#super_chip48_instructions) - SCD nibble
-  - [00FB](#super_chip48_instructions) - SCR
-  - [00FC](#super_chip48_instructions) - SCL
-  - [00FD](#super_chip48_instructions) - EXIT
-  - [00FE](#super_chip48_instructions) - LOW
-  - [00FF](#super_chip48_instructions) - HIGH
-  - [Dxy0](#super_chip48_instructions) - DRW Vx, Vy, 0
-  - [Fx30](#super_chip48_instructions) - LD HF, Vx
-  - [Fx75](#super_chip48_instructions) - LD R, Vx
-  - [Fx85](#super_chip48_instructions) - LD Vx, R
-- [Interpreters](#interpreters)
-- [Credits](#credits)
+[TOC]
 
 ## Using This Document <span id="using_this_document"></span>[\[TOC\]](#toc)
 
